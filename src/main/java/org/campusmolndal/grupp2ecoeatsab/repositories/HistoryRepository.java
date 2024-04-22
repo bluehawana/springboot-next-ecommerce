@@ -1,17 +1,31 @@
-
 package org.campusmolndal.grupp2ecoeatsab.repositories;
 
 import org.campusmolndal.grupp2ecoeatsab.models.History;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-/**
- * En repository-gränssnitt för att hantera åtkomst till historikdata i databasen.
- */
-@Repository
-public interface HistoryRepository extends JpaRepository<History, Long> {
+import java.util.Map;
 
-    // Hämta historik för en specifik användare
-    List<History> findByUserId(Long userId);
+public class HistoryRepository {
+    private Map<String, List<History>> historyDatabase; // Ændret typen til Map
+
+    // Konstruktor för att skapa en ny HistoryRepository-instans
+    public HistoryRepository() {
+        this.historyDatabase = new HashMap<>();
+    }
+
+    // Metod för att spara en ny historik i databasen
+    public void saveHistory(History history) {
+        String username = history.getUser().getUsername(); // Antagelse: hver bruger har en unik brugernavn
+        List<History> userHistory = historyDatabase.getOrDefault(username, new ArrayList<>());
+        userHistory.add(history);
+        historyDatabase.put(username, userHistory);
+        System.out.println("Historik sparad i databasen för användare: " + username);
+    }
+
+    // Metod för att hitta historik for en bestemt bruger
+    public List<History> findHistoryByUser(String username) {
+        return historyDatabase.getOrDefault(username, new ArrayList<>());
+    }
 }

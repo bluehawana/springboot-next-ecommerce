@@ -1,8 +1,7 @@
 package org.campusmolndal.grupp2ecoeatsab.services;
 
 import org.campusmolndal.grupp2ecoeatsab.models.History;
-import org.campusmolndal.grupp2ecoeatsab.repositories.HistoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.campusmolndal.grupp2ecoeatsab.models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,25 +9,28 @@ import java.util.List;
 @Service
 public class HistoryService {
 
-    private final HistoryRepository historyRepository;
-
-    @Autowired
-    public HistoryService(HistoryRepository historyRepository) {
-        this.historyRepository = historyRepository;
+    // Tom konstruktör för att skapa en ny instans av HistoryService
+    public HistoryService() {
     }
 
-    // Lägg till en historia
-    public void addHistory(History history) {
-        historyRepository.save(history);
+    // Metod för att hämta historiken för en given användare
+    public List<History> getHistoryByUser(String userId) {
+        // Implementera logiken för att hämta historiken för den angivna användaren från databasen eller annan lagring
+        return null; // Tillfälligt returnera null
     }
 
-    // Hämta alla historier
-    public List<History> getAllHistory() {
-        return historyRepository.findAll();
+    // Metod för att validera historikinformation
+    public boolean validateHistory(String products, String deliveryAddress) {
+        // Enkel validering: kontrollera om produkter och leveransadress är ogiltiga
+        return products != null && !products.isEmpty() && deliveryAddress != null && !deliveryAddress.isEmpty();
     }
 
-    // Hämta historik för en specifik användare
-    public List<History> getHistoryByUserId(Long userId) {
-        return historyRepository.findByUserId(userId);
+    // Metod för att skapa en ny historik
+    public void createHistory(String products, String deliveryAddress, String username, String password, String email) {
+        // Skapa en ny användarinstans
+        User user = new User(username, password, email);
+        // Skapa en ny instans av History med produkter, leveransadress och användaren
+        History newHistory = new History(products, deliveryAddress, user);
+
     }
 }

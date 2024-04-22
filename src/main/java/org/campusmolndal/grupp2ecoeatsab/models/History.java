@@ -1,30 +1,44 @@
 package org.campusmolndal.grupp2ecoeatsab.models;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "historik") // Namnet på tabellen i databasen
 public class History {
+    private String products;
+    private String deliveryAddress;
+    private User user; // Referens till användaren
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Id för historiken
-
-    private LocalDateTime tidpunkt; // Tidpunkten för historiken
-
-    private String händelse; // Beskrivning av händelsen
-
-    // Konstruktorer, getters och setters
-
-    public History() {
+    // Konstruktor för att skapa en ny instans av History med produkter och leveransadress
+    public History(String products, String deliveryAddress, User user) {
+        this.products = products;
+        this.deliveryAddress = deliveryAddress;
+        this.user = user; // Lägg till användaren i konstruktorn
     }
 
-    public History(LocalDateTime tidpunkt, String händelse) {
-        this.tidpunkt = tidpunkt;
-        this.händelse = händelse;
+    // Getter-metod för produkter
+    public String getProducts() {
+        return products;
     }
 
-    // getters och setters
-    // toString, equals och hashCode metoder
+    // Setter-metod för produkter
+    public void setProducts(String products) {
+        this.products = products;
+    }
+
+    // Getter-metod för leveransadress
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    // Setter-metod för leveransadress
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    // Getter-metod för användaren
+    public User getUser() {
+        return user;
+    }
+
+    // Setter-metod för användaren
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -1,41 +1,41 @@
 package org.campusmolndal.grupp2ecoeatsab.models;
 
 public class Registration {
+
     private String username;
-
-    //Lösenord för registrering
     private String password;
+    private String email;
 
-    public Registration(){
-        super();
+    public Registration() {
     }
 
-    //konstruktor
-    public Registration(String username, String password){
-        super();
-        this.username = username;
-        this.password = password;
+    // Getter-metod för användarnamn
+    public String getUsername() {
+        return username;
     }
 
-    //getter och setter
-    public String getUsername(){
-        return this.username;
-    }
-
-    public void setUsername(String username){
+    // Setter-metod för användarnamn
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPassword(){
-        return this.password;
+    // Getter-metod för lösenord
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassword(String password){
+    // Setter-metod för lösenord
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    //  toString-metod för att skapa en strängrepresentation av RegistrationDTO
-    public String toString(){
-        return "Registration info: username: " + this.username + " password: " + this.password;
+    // Getter-metod för e-post
+    public String getEmail() {
+        return email;
+    }
+
+    // Setter-metod för e-post
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

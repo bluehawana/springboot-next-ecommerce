@@ -6,41 +6,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
+
+// Serviceklass för att hantera affärslogik för produkter
 @Service
 public class ProductService {
 
-    // Injicera ProductRepository
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    // Metod för att hämta alla produkter
-    // Returnerar en lista med alla produkter
+    @Autowired
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+    // Hämta en produkt baserat på dess ID
+    public Product getProductById(long productId) {
+
+        return productRepository.findById(productId).orElse(null);  // Använd findById-metoden för att hitta produkten baserat på id
+
+    }
+
+    // Hämta alla produkter
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    // Metod för att hämta en specifik produkt med hjälp av dess id
-    // Tar emot ett id och returnerar den matchande produkten om den finns, annars null
-    public Product getProductById(Long id) {
-        Optional<Product> optionalProduct = productRepository.findById(id);
-        return optionalProduct.orElse(null);
+    // Metod för validering av produktinformation
+    public boolean validateProduct(String name, double price, String description) {
+        // Enkel validering: kontrollera om namn och beskrivning är ogiltiga
+        return name != null && !name.isEmpty() && description != null && !description.isEmpty() && price > 0;
     }
 
-    // Metod för att spara en ny produkt eller uppdatera en befintlig produkt
-    // Tar emot en produkt och returnerar den sparade/uppdaterade produkten
-    public Product saveOrUpdateProduct(Product product) {
-        return productRepository.save(product);
+    // Metod för att skapa en ny produkt
+    public void createProduct(String name, double price, String description) {
+        // Skapar ett nytt produktobjekt
+        Product newProduct = new Product(name, price, description);
+        // Sparar den nya produkten i databasen
+        productRepository.save(newProduct);
     }
+    // Metod för att lägga till en produkt i varukorgen
+    public void addToCart(Product product) {
+        System.out.println("Produkten " + product.getName() + " har lagts till i varukorgen.");
 
-    // Metod för att ta bort en produkt med hjälp av dess id
-    // Tar emot ett id och returnerar true om produkten har tagits bort, annars false
-    public boolean deleteProductById(Long id) {
-        if (productRepository.existsById(id)) {
-            productRepository.deleteById(id);
-            return true;
-        }
-        return false;
     }
 }
