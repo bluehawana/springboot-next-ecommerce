@@ -13,6 +13,7 @@ export default function PageClient() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [emailForSignIn, setEmailForSignIn] = useState('');
 
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -58,52 +59,21 @@ export default function PageClient() {
                             <FaGithub size="25" />
                             Sign In With GitHub
                         </Button>
+                        <Label htmlFor="emailForSignIn">Email for sign-in*</Label>
+                        <Input
+                            className="mt-2 mb-4 bg-transparent rounded-full"
+                            type="email"
+                            id="emailForSignIn"
+                            placeholder="Email"
+                            value={emailForSignIn}
+                            onChange={(e) => setEmailForSignIn(e.target.value)}
+                        />
                         <Button
                             className="flex items-center w-full gap-4 px-12 mb-4 bg-transparent rounded-full"
                             variant="outline"
-                            onClick={() => setIsUsernameLogin(!isUsernameLogin)}
+                            onClick={() => signIn('email', { email: emailForSignIn })}
                         >
-                            Sign In With {isUsernameLogin ? 'Email' : 'Username'}
-                        </Button>
-                        {isUsernameLogin ? (
-                            <>
-                                <Label htmlFor="username">Username*</Label>
-                                <Input
-                                    className="mt-2 mb-4 bg-transparent rounded-full"
-                                    type="text"
-                                    id="username"
-                                    placeholder="Username"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                />
-                            </>
-                        ) : (
-                            <>
-                                <Label htmlFor="email">Email*</Label>
-                                <Input
-                                    className="mt-2 mb-4 bg-transparent rounded-full"
-                                    type="email"
-                                    id="email"
-                                    placeholder="Email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                                <Label htmlFor="password">Password*</Label>
-                                <Input
-                                    className="mt-2 bg-transparent rounded-full"
-                                    type="password"
-                                    id="password"
-                                    placeholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </>
-                        )}
-                        <Button
-                            type="submit"
-                            className="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
-                        >
-                            Create Account
+                            Sign In With Email
                         </Button>
                     </form>
                     <p className="mt-4 text-xs text-slate-200">
